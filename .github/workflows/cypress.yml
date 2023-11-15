@@ -18,11 +18,10 @@ jobs:
           mkdir public
           cp -r cypress/videos public/videos
           cp -r cypress/screenshots public/screenshots
-      - name: Merge test reports
-        run: npm run combine:report
 
-      - name: Generate HTML report
-        run: npm run generate:report
+      - name: Move HTML report to public
+        run: |
+          cp -r cypress/reports/ public/index.html
       
       - name: Deploy report page to GitHub Page
         uses: peaceiris/actions-gh-pages@v3
