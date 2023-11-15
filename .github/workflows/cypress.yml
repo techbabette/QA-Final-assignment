@@ -35,5 +35,4 @@ jobs:
       - name: Show run message
         if: always()
         run: |
-          echo -n "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_STEP_SUMMARY
           echo -n "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_OUTPUT
