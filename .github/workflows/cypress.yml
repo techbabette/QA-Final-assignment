@@ -31,3 +31,8 @@ jobs:
         with:
           github_token: ${{ secrets.PTA }}
           publish_dir: ./public
+
+      - name: Show run message
+        if: always()
+        run: |
+          echo "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_STEP_SUMMARY
