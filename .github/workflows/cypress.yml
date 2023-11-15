@@ -21,7 +21,7 @@ jobs:
 
       - name: Move HTML report to public
         run: |
-          cp -r cypress/reports/index.html public/index.html
+          cp -r cypress/reports/html/index.html public/index.html
       
       - name: Deploy report page to GitHub Page
         uses: peaceiris/actions-gh-pages@v3
