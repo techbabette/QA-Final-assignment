@@ -3,6 +3,10 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -13,7 +17,6 @@ jobs:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
           GITHUB_TOKEN: ${{ secrets.PTA }}
-        continue-on-error: true
 
       - name: Move HTML report to public
         run: |
