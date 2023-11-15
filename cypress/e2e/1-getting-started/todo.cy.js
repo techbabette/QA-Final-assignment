@@ -54,7 +54,7 @@ describe('example to-do app', () => {
     cy.get('.todo-list li')
       .should('have.length', 3)
       .last()
-      .should('have.text', newItem)
+      .should('have.text', "force fail")
   })
 
   it('can check off an item as completed', () => {
