@@ -36,3 +36,4 @@ jobs:
         if: always()
         run: |
           echo "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_STEP_SUMMARY
+          echo "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_OUTPUT
