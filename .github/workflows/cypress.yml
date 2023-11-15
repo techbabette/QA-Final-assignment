@@ -39,7 +39,7 @@ jobs:
 
       - name: Leave comment
         uses: actions/github-script@v5
-        if: GITHUB_EVENT_NAME == 'pull_request'
+        if: github.event_name == 'pull_request'
         with:
           github-token: ${{secrets.PTA}}
           script: |
