@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
     branches:
-    - master
+    - main
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -31,3 +31,21 @@ jobs:
         with:
           github_token: ${{ secrets.PTA }}
           publish_dir: ./public
+
+      - name: Show run message
+        if: always()
+        run: |
+          echo -n "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_STEP_SUMMARY
+
+      # - name: Leave comment
+      #   uses: actions/github-script@v5
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   with:
+      #     github-token: ${{secrets.PTA}}
+      #     script: |
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: 'View the test results [here](https://techbabette.github.io/QA-Final-assignment/)'
+      #       })
