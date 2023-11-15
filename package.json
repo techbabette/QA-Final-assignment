@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "combine:report": "mochawesome-merge ./mochawesome-report/*.json -o index.json",
+    "generate:report": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
   },
   "keywords": [],
   "author": "",
