@@ -1,0 +1,77 @@
+{
+    "grand_total": 7,
+    "base_grand_total": 7,
+    "subtotal": 5,
+    "base_subtotal": 22,
+    "discount_amount": 0,
+    "base_discount_amount": 0,
+    "subtotal_with_discount": 5,
+    "base_subtotal_with_discount": 5,
+    "shipping_amount": 4.20,
+    "base_shipping_amount": 5,
+    "shipping_discount_amount": 0,
+    "base_shipping_discount_amount": 0,
+    "tax_amount": 0,
+    "base_tax_amount": 0,
+    "weee_tax_applied_amount": null,
+    "shipping_tax_amount": 0,
+    "base_shipping_tax_amount": 0,
+    "subtotal_incl_tax": 5,
+    "base_subtotal_incl_tax": 5,
+    "shipping_incl_tax": 4.20,
+    "base_shipping_incl_tax": 4.20,
+    "base_currency_code": "USD",
+    "quote_currency_code": "USD",
+    "items_qty": 1,
+    "items": [
+      {
+        "item_id": 453107,
+        "price": 22,
+        "base_price": 22,
+        "qty": 1,
+        "row_total": 22,
+        "base_row_total": 22,
+        "row_total_with_discount": 0,
+        "tax_amount": 0,
+        "base_tax_amount": 0,
+        "tax_percent": 0,
+        "discount_amount": 0,
+        "base_discount_amount": 0,
+        "discount_percent": 0,
+        "price_incl_tax": 22,
+        "base_price_incl_tax": 22,
+        "row_total_incl_tax": 22,
+        "base_row_total_incl_tax": 22,
+        "options": "[{\"value\":\"XS\",\"label\":\"Size\"},{\"value\":\"Blue\",\"label\":\"Color\"}]",
+        "weee_tax_applied_amount": null,
+        "weee_tax_applied": null,
+        "name": "Radiant Tee"
+      }
+    ],
+    "total_segments": [
+      {
+        "code": "subtotal",
+        "title": "Subtotal",
+        "value": 5
+      },
+      {
+        "code": "shipping",
+        "title": "Shipping & Handling (Flat Rate - Fixed)",
+        "value": 4.20
+      },
+      {
+        "code": "tax",
+        "title": "Tax",
+        "value": 0,
+        "extension_attributes": {
+          "tax_grandtotal_details": []
+        }
+      },
+      {
+        "code": "grand_total",
+        "title": "Grand Total",
+        "value": 9.20,
+        "area": "footer"
+      }
+    ]
+  }

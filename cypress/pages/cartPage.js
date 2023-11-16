@@ -8,6 +8,15 @@ class cartPage{
     static get getSingleItemPrice(){
         return cy.get(".cart-price").first().children("span");
     }
+    static get checkoutButton(){
+        return cy.get('span').contains('Proceed to Checkout');
+    }
+    static getPriceCategory(name){
+        return cy.get('tr > th.mark').contains(name);
+    }
+    static getPriceCategoryValue(name){
+        return cartPage.getPriceCategory(name).next().children("span");
+    }
 }
 
 export default cartPage;

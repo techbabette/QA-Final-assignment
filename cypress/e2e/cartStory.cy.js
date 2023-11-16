@@ -31,6 +31,37 @@ describe("The cart story", () => {
 
         itemPage.itemPrice.getProperty("text", "itemPrice");
 
+        cy.intercept(
+            {
+                url : '**/customer/section/load/*',
+                times : 10
+            },
+            {
+                statusCode: 200,
+                fixture : "fixedCart.json"
+            }
+            )
+
+        cy.intercept(
+            {
+                url : "**/rest/default/V1/carts/mine/totals**"
+            },
+            {
+                statusCode: 200,
+                fixture : "fixedTotals.json"
+            }
+        ).as("totals")
+
+        cy.intercept(
+            {
+                url : '**/rest/default/V1/carts/mine/estimate-shipping-methods-by-address-id'
+            },
+            {
+                statusCode: 200,
+                fixture : "fixedShipping.json"
+            }
+            )
+
         cy.step("Add item to cart");
         itemPage.addToCartButton.click();
 
@@ -38,12 +69,23 @@ describe("The cart story", () => {
         // itemPage.cartNumberSpan.should("have.text", "1");
 
         itemPage.checkoutLink.click();
+        cy.clearAllLocalStorage();
         cy.url().should("contain", "checkout/cart");
 
-        cy.step("Check if correct options selected").then(function(){
+        // cy.wait("@totals").then((response) => {
+        //     cy.reload();
+        // })
+
+        cy.step("Check if information correct").then(function(){
             cartPage.getItemPropertyValueWithName("Size").should("contain.text", this.selectedSize);
             cartPage.getItemPropertyValueWithName("Color").should("contain.text", this.selectedColor);
             cartPage.getSingleItemPrice.should("contain.text", this.itemPrice);
+            // cartPage.getPriceCategoryValue("Subtotal").should("have.text", this.itemPrice);
+            cartPage.getPriceCategoryValue("Subtotal").should("be.visible");
         })
+
+        cy.step("Proceed to shipping");
+        cartPage.checkoutButton.click();
+        cy.url().should("contain", "checkout/#shipping");
     })
 })

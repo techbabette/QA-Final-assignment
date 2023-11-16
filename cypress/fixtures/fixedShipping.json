@@ -1,0 +1,14 @@
+[
+    {
+      "carrier_code": "flatrate",
+      "method_code": "flatrate",
+      "carrier_title": "Flat Rate",
+      "method_title": "Fixed",
+      "amount": 4.2,
+      "base_amount": 4.2,
+      "available": true,
+      "error_message": "",
+      "price_excl_tax": 4.2,
+      "price_incl_tax": 4.2
+    }
+  ]
