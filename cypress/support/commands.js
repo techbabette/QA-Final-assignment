@@ -46,3 +46,16 @@ Cypress.Commands.add("login", (userCredentials) => {
         })
     })
 })
+
+Cypress.Commands.add("getPropertyAndClick",  { prevSubject: true }, (subject, property, alias, permutation = ((el) => el)) => {
+        if (property === 'text') {
+            cy.wrap(subject).invoke('text').then((newValue) => {
+                cy.wrap(permutation(newValue)).as(alias)
+            })
+        } else {
+            cy.wrap(subject).invoke('attr', property).then((newValue) => {
+                cy.wrap(permutation(newValue)).as(alias)
+            });
+        }
+        cy.wrap(subject).click();
+})
