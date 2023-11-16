@@ -95,4 +95,100 @@ Cypress.Commands.add('fillShippingFields', (user) => {
     shippingPage.saveAddressCheckbox.uncheck();
 })
 
-Cypress.Commands.add('')
+Cypress.Commands.add('clickFirstItemAndVerify', function(){
+    homePage.firstItemLink.getPropertyAndClick("text", "selectedItem", ((string) => string.trim()));
+})
+
+Cypress.Commands.add('checkSingleItemLoad', function() {
+    cy.get("@selectedItem").then((itemName) => {
+        let correctUrlPart = itemName.split(" ").join("-").toLowerCase();
+        cy.url().should("contain", correctUrlPart);
+        itemPage.itemName.should("have.text", itemName);
+    })
+})
+
+Cypress.Commands.add('selectSizeColorAndVerify', function() {
+    itemPage.firstSizeOption.getPropertyAndClick("option-label","selectedSize");
+    itemPage.firstColorOption.getPropertyAndClick("option-label","selectedColor");
+    itemPage.itemPrice.getProperty("text", "itemPrice");
+
+    cy.then(function(){
+        itemPage.selectedSizeSpan.should("have.text", this.selectedSize);
+        itemPage.selectedColorSpan.should("have.text", this.selectedColor);
+    })
+})
+
+Cypress.Commands.add('addItemAndVerify', function() {
+    cy.step("Add item to cart");
+    itemPage.addToCartButton.click();
+
+    cy.step("Check if cart number reflects change")
+    itemPage.cartNumberSpan.should("have.text", "1");
+    
+    itemPage.checkoutLink.click();
+    cy.url().should("contain", "checkout/cart");
+})
+
+Cypress.Commands.add('checkCartPageInformation', function(){
+    cartPage.getItemPropertyValueWithName("Size").should("contain.text", this.selectedSize);
+    cartPage.getItemPropertyValueWithName("Color").should("contain.text", this.selectedColor);
+    cartPage.getSingleItemPrice.should("contain.text", this.itemPrice);
+    // cartPage.getPriceCategoryValue("Subtotal").should("have.text", this.itemPrice);
+    cartPage.getPriceCategoryValue("Subtotal").should("be.visible");
+
+    cy.step("Proceed to shipping");
+    cartPage.checkoutButton.click();
+    cy.url().should("contain", "checkout/#shipping");
+})
+
+Cypress.Commands.add('addShippingInfo', function(){
+    shippingPage.newAddressButton.click();
+
+    cy.fixture("users.json").then(function(users) {
+        let user = users.validInformation;
+
+        cy.fillShippingFields(user);
+        cy.step("Confirm shipping information");
+        shippingPage.shipHereButton.click();
+    })
+
+    shippingPage.nextButton.click();
+})
+
+Cypress.Commands.add('confirmPayment', function(){
+    paymentPage.billingCheckbox.check();
+    paymentPage.placeOrderButton.click();
+})
+
+Cypress.Commands.add('setupCartIntercepts', function(){
+    cy.intercept(
+        {
+            url : '**/customer/section/load/*',
+            times : 10
+        },
+        {
+            statusCode: 200,
+            fixture : "fixedCart.json"
+        }
+        )
+
+    cy.intercept(
+        {
+            url : "**/rest/default/V1/carts/mine/totals**"
+        },
+        {
+            statusCode: 200,
+            fixture : "fixedTotals.json"
+        }
+    ).as("totals")
+
+    cy.intercept(
+        {
+            url : '**/rest/default/V1/carts/mine/estimate-shipping-methods-by-address-id'
+        },
+        {
+            statusCode: 200,
+            fixture : "fixedShipping.json"
+        }
+        )
+})

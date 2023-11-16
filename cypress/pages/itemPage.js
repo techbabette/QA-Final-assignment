@@ -23,18 +23,9 @@ class itemPage{
     static get checkoutLink(){
         return cy.get("a").contains("shopping cart");
     }
-    // static get cartMenuButton(){
-    //     return cy.get(".minicart-wrapper");
-    // }
-    // static get proceedButton(){
-    //     return cy.get("#top-cart-btn-checkout");
-    // }
-    // static get cartNumberLabel(){
-    //     return cy.get("span").contains("items");
-    // }
-    // static get cartNumberSpan(){
-    //     return cy.get(".counter-number");
-    // }
+    static get cartNumberSpan(){
+        return cy.get(".counter-number");
+    }
 }
 
 export default itemPage;
