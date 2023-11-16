@@ -22,5 +22,23 @@ describe("The cart story", () => {
         cy.step("Select size and color");
         itemPage.firstSizeOption.getPropertyAndClick("option-label","selectedSize");
         itemPage.firstColorOption.getPropertyAndClick("option-label","selectedColor");
+
+        cy.step("Check if selected values shown").then(function(){
+            itemPage.selectedSizeSpan.should("have.text", this.selectedSize);
+            itemPage.selectedColorSpan.should("have.text", this.selectedColor);
+        })
+
+        cy.step("Add item to cart");
+        itemPage.addToCartButton.click();
+
+        cy.step("Check if cart number reflects change")
+        // itemPage.cartNumberSpan.should("have.text", "1");
+
+        //Temporarily necessary check
+        itemPage.cartNumberLabel.should("exist");
+
+        itemPage.cartMenuButton.click();
+        itemPage.proceedButton.click();
+        cy.url().should("contain", "checkout/#shipping");
     })
 })
