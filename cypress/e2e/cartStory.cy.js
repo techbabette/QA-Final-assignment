@@ -1,5 +1,6 @@
 import homePage from "../pages/homePage";
 import itemPage from "../pages/itemPage";
+import cartPage from "../pages/cartPage";
 
 beforeEach(() => {
     cy.fixture("userLoginPairs").then((loginPairs) => {
@@ -28,17 +29,21 @@ describe("The cart story", () => {
             itemPage.selectedColorSpan.should("have.text", this.selectedColor);
         })
 
+        itemPage.itemPrice.getProperty("text", "itemPrice");
+
         cy.step("Add item to cart");
         itemPage.addToCartButton.click();
 
         cy.step("Check if cart number reflects change")
         // itemPage.cartNumberSpan.should("have.text", "1");
 
-        //Temporarily necessary check
-        itemPage.cartNumberLabel.should("exist");
+        itemPage.checkoutLink.click();
+        cy.url().should("contain", "checkout/cart");
 
-        itemPage.cartMenuButton.click();
-        itemPage.proceedButton.click();
-        cy.url().should("contain", "checkout/#shipping");
+        cy.step("Check if correct options selected").then(function(){
+            cartPage.getItemPropertyValueWithName("Size").should("contain.text", this.selectedSize);
+            cartPage.getItemPropertyValueWithName("Color").should("contain.text", this.selectedColor);
+            cartPage.getSingleItemPrice.should("contain.text", this.itemPrice);
+        })
     })
 })

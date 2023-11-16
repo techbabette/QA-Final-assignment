@@ -14,21 +14,27 @@ class itemPage{
     static get selectedColorSpan(){
         return cy.get('span[id*=option-label-color]').next();
     }
+    static get itemPrice(){
+        return cy.get("[data-price-type=finalPrice]").first().children("span");
+    }
     static get addToCartButton(){
         return cy.get("#product-addtocart-button");
     }
-    static get cartMenuButton(){
-        return cy.get(".minicart-wrapper");
+    static get checkoutLink(){
+        return cy.get("a").contains("shopping cart");
     }
-    static get proceedButton(){
-        return cy.get("#top-cart-btn-checkout");
-    }
-    static get cartNumberLabel(){
-        return cy.get("span").contains("items");
-    }
-    static get cartNumberSpan(){
-        return cy.get(".counter-number");
-    }
+    // static get cartMenuButton(){
+    //     return cy.get(".minicart-wrapper");
+    // }
+    // static get proceedButton(){
+    //     return cy.get("#top-cart-btn-checkout");
+    // }
+    // static get cartNumberLabel(){
+    //     return cy.get("span").contains("items");
+    // }
+    // static get cartNumberSpan(){
+    //     return cy.get(".counter-number");
+    // }
 }
 
 export default itemPage;
