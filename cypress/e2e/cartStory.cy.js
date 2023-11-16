@@ -1,6 +1,8 @@
 import homePage from "../pages/homePage";
 import itemPage from "../pages/itemPage";
 import cartPage from "../pages/cartPage";
+import shippingPage from "../pages/shippingPage";
+import paymentPage from "../pages/paymentPage";
 
 beforeEach(() => {
     cy.fixture("userLoginPairs").then((loginPairs) => {
@@ -72,10 +74,6 @@ describe("The cart story", () => {
         cy.clearAllLocalStorage();
         cy.url().should("contain", "checkout/cart");
 
-        // cy.wait("@totals").then((response) => {
-        //     cy.reload();
-        // })
-
         cy.step("Check if information correct").then(function(){
             cartPage.getItemPropertyValueWithName("Size").should("contain.text", this.selectedSize);
             cartPage.getItemPropertyValueWithName("Color").should("contain.text", this.selectedColor);
@@ -87,5 +85,22 @@ describe("The cart story", () => {
         cy.step("Proceed to shipping");
         cartPage.checkoutButton.click();
         cy.url().should("contain", "checkout/#shipping");
+
+        cy.section("Add shipping information")
+        shippingPage.newAddressButton.click();
+
+        cy.fixture("users.json").then(function(users) {
+            let user = users.validInformation;
+
+            cy.fillShippingFields(user);
+            cy.step("Confirm shipping information");
+            shippingPage.shipHereButton.click();
+        })
+
+        shippingPage.nextButton.click();
+
+        paymentPage.billingCheckbox.check();
+
+        paymentPage.placeOrderButton.click();
     })
 })

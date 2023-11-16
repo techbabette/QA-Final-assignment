@@ -25,6 +25,11 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import loginPage from "../pages/loginPage";
+import shippingPage from "../pages/shippingPage";
+import homePage from "../pages/homePage";
+import itemPage from "../pages/itemPage";
+import cartPage from "../pages/cartPage";
+import paymentPage from "../pages/paymentPage";
 
 Cypress.Commands.add("submitLoginForm", (userCredentials) => {
     cy.step("Fill email field");
@@ -63,3 +68,31 @@ Cypress.Commands.add('getPropertyAndClick',  { prevSubject: true }, (subject, pr
         cy.wrap(subject).getProperty(property, alias, permutation);
         cy.wrap(subject).click();
 })
+
+Cypress.Commands.add('fillShippingFields', (user) => {
+    let fieldsAndValues = [
+        {field: "firstnameField", val : user.firstname},
+        {field: "lastnameField", val : user.lastname},
+        {field: "streetField", val : user.street},
+        {field: "cityField", val : user.city},
+        {field: "countryField", val : user.country, type : "select"},
+        {field: "stateField", val : user.state, type : "select"},
+        {field: "telephoneField", val : user.telephone},
+        {field: "postcodeField", val : user.postcode}
+    ]
+
+    for(let field of fieldsAndValues){
+        console.log(field.field);
+        if(!Object.hasOwn(field, "type")){
+            shippingPage[field.field].clear().type(field.val);
+            continue;
+        }
+        if(field.type == "select"){
+            shippingPage[field.field].select(field.val);
+        }
+    }
+
+    shippingPage.saveAddressCheckbox.uncheck();
+})
+
+Cypress.Commands.add('')
