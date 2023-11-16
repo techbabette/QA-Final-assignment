@@ -23,3 +23,26 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import loginPage from "../pages/loginPage";
+
+Cypress.Commands.add("submitLoginForm", (userCredentials) => {
+    cy.step("Fill email field");
+    loginPage.emailField.type(userCredentials.email);
+  
+    cy.step("Fill password field");
+    loginPage.passwordField.type(userCredentials.password);
+
+    cy.step("Submit form");
+    loginPage.submitButton.click();
+})
+
+Cypress.Commands.add("login", (userCredentials) => {
+    cy.session("validUser", () => {
+        cy.visit("/customer/account/login/");
+        cy.submitLoginForm(userCredentials);
+        cy.getCookie("PHPSESSID").then((sessionId) => {
+            cy.setCookie("PHPSESSID", sessionId.value);
+        })
+    })
+})
