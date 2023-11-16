@@ -30,6 +30,7 @@ import homePage from "../pages/homePage";
 import itemPage from "../pages/itemPage";
 import cartPage from "../pages/cartPage";
 import paymentPage from "../pages/paymentPage";
+import successPage from "../pages/successPage";
 
 Cypress.Commands.add("submitLoginForm", (userCredentials) => {
     cy.step("Fill email field");
@@ -97,6 +98,9 @@ Cypress.Commands.add('fillShippingFields', (user) => {
 
 Cypress.Commands.add('clickFirstItemAndVerify', function(){
     homePage.firstItemLink.getPropertyAndClick("text", "selectedItem", ((string) => string.trim()));
+    cy.then(function(){
+        cy.checkSingleItemLoad();
+    })
 })
 
 Cypress.Commands.add('checkSingleItemLoad', function() {
@@ -158,6 +162,10 @@ Cypress.Commands.add('addShippingInfo', function(){
 Cypress.Commands.add('confirmPayment', function(){
     paymentPage.billingCheckbox.check();
     paymentPage.placeOrderButton.click();
+
+    cy.url().should("contain", "/checkout/onepage/success");
+
+    successPage.successMessage.should("be.visible");
 })
 
 Cypress.Commands.add('setupCartIntercepts', function(){
