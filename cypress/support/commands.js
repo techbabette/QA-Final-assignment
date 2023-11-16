@@ -32,24 +32,29 @@ import cartPage from "../pages/cartPage";
 import paymentPage from "../pages/paymentPage";
 import successPage from "../pages/successPage";
 
-Cypress.Commands.add("submitLoginForm", (userCredentials) => {
-    cy.step("Fill email field");
+Cypress.Commands.add('submitLoginForm', (userCredentials) => {
+    cy.step('Fill email field');
     loginPage.emailField.type(userCredentials.email);
   
-    cy.step("Fill password field");
+    cy.step('Fill password field');
     loginPage.passwordField.type(userCredentials.password);
 
-    cy.step("Submit form");
+    cy.step('Submit form');
     loginPage.submitButton.click();
 })
 
-Cypress.Commands.add("login", (userCredentials) => {
-    cy.session("validUser", () => {
-        cy.visit("/customer/account/login/");
+Cypress.Commands.add('login', (userCredentials) => {
+    cy.session('validUser', () => {
+        cy.visit('/customer/account/login/');
         cy.submitLoginForm(userCredentials);
-        cy.getCookie("PHPSESSID").then((sessionId) => {
-            cy.setCookie("PHPSESSID", sessionId.value);
+        cy.getCookie('PHPSESSID').then((sessionId) => {
+            cy.setCookie('PHPSESSID', sessionId.value);
         })
+    },{
+        validate(){
+            cy.visit('/customer/account/');
+            cy.url().should('contain', '/customer/account/')
+        }
     })
 })
 
