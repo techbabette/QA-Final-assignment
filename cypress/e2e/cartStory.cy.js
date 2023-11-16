@@ -23,7 +23,7 @@ describe("The cart story", () => {
         cy.step("Add shipping information and proceed to payment page");
         cy.addShippingInfo();
 
-        cy.step('Confirm payment');
+        cy.step('Confirm payment and verify');
         cy.confirmPayment()
     })
 })
