@@ -39,6 +39,7 @@ jobs:
           github_token: ${{ secrets.PTA }}
           publish_dir: ./public
           destination_dir: ./${{env.currTime}}
+          commit_message: "Add report to timestamped directory"
       
       - name: Deploy report page to active GitHub Page
         if: always()
@@ -47,6 +48,7 @@ jobs:
           github_token: ${{ secrets.PTA }}
           publish_dir: ./public
           keep_files: true
+          commit_message: "Deploy report to default github page"
 
       - name: Show run message
         if: always()
