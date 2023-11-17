@@ -18,19 +18,33 @@ jobs:
           # For recording and parallelization to work you must set your CYPRESS_RECORD_KEY
           # in GitHub repo → Settings → Secrets → Actions
           GITHUB_TOKEN: ${{ secrets.PTA }}
+          
+      - name: Get UTC timestamp
+        if: always()
+        run: |
+          echo "currTime=$(date -u +'%Y_%m_%d-%H_%M_%S')" >> $GITHUB_ENV
 
       - name: Move HTML report to public
         if: always()
         run: |
           mkdir public
           cp -a cypress/reports/html/. public
-      
-      - name: Deploy report page to GitHub Page
+
+      - name: Deploy report page to timestamped directory
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.PTA }}
           publish_dir: ./public
+          destination_dir: ./${{env.currTime}}
+      
+      - name: Deploy report page to active GitHub Page
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.PTA }}
+          publish_dir: ./public
+          keep_files: true
 
       - name: Show run message
         if: always()
