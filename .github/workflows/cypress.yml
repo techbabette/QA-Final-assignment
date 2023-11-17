@@ -19,16 +19,18 @@ jobs:
           # in GitHub repo → Settings → Secrets → Actions
           GITHUB_TOKEN: ${{ secrets.PTA }}
           
-      - name: Get UTC timestamp
-        if: always()
-        run: |
-          echo "currTime=$(date -u +'%Y_%m_%d-%H_%M_%S')" >> $GITHUB_ENV
+
 
       - name: Move HTML report to public
         if: always()
         run: |
           mkdir public
           cp -a cypress/reports/html/. public
+
+      - name: Get UTC timestamp
+        if: always()
+        run: |
+          echo "currTime=$(date -u +'%Y_%m_%d-%H_%M_%S')" >> $GITHUB_ENV
 
       - name: Deploy report page to timestamped directory
         if: always()
@@ -49,7 +51,7 @@ jobs:
       - name: Show run message
         if: always()
         run: |
-          echo -n "View the test results [here](https://techbabette.github.io/QA-Final-assignment/)" >> $GITHUB_STEP_SUMMARY
+          echo -n "View the test results [here](https://techbabette.github.io/QA-Final-assignment/${{env.currTime}})" >> $GITHUB_STEP_SUMMARY
 
       # - name: Leave comment
       #   uses: actions/github-script@v5
