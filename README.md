@@ -20,5 +20,5 @@ Tests are run automatically on every push and test results are published to [Git
 
 [Github Pages](https://techbabette.github.io/QA-Final-assignment/) shows the results of the latest run, while previous results are stored on the [gh-pages branch](https://github.com/techbabette/QA-Final-assignment/tree/gh-pages).
 
-![gh-pages preview showing timestamped results](https://i.imgur.com/n3f1CEI.png "gh-pages preview.")
+![gh-pages preview showing timestamped results](https://i.imgur.com/n3f1CEI.png "gh-pages preview")
 
